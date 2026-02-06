@@ -34,20 +34,13 @@
 👉 **下载地址（Releases）：**  
 https://github.com/XuanMouren2004/VideoCompressor/releases
 
-发行版通常包含：
-
-- 🗂 VideoCompressor.exe（可直接运行）  
-- 📌 app.ico 图标文件  
-- ❗ 不包含 FFmpeg，需要自行下载放置
-
 只需：  
-1. 解压缩  
-2. 将 `ffmpeg.exe` 和 `ffprobe.exe` 放到同一目录或系统 PATH  
-3. 运行 `VideoCompressor.exe`
+1. 解压缩   
+2. 运行 `VideoCompressor.exe`
 
 ---
 
-## 🛠 使用前准备
+## 🛠 源码版使用前准备
 
 ### 1️⃣ 安装 Python（如果用源码版）
 
