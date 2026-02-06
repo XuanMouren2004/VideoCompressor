@@ -170,7 +170,11 @@ def compress_one(
 # ================= 扫描视频 =================
 def scan_videos(root):
     vids = []
-    for base, _, files in os.walk(root):
+    for base, dirs, files in os.walk(root):
+        # 🚫 排除 output_wm 目录
+        if "output_wm" in dirs:
+            dirs.remove("output_wm")
+
         for f in files:
             if f.lower().endswith(VIDEO_EXTS):
                 vids.append(os.path.join(base, f))
@@ -206,7 +210,7 @@ def main():
         "• 原文件 [bold red]不会被修改[/bold red]\n"
         "• 新文件名追加：[_h265.mp4]\n"
         "• 示例：example.mp4 → example_h265.mp4\n",
-        
+
         title="[bold cyan]VideoCompressor[/bold cyan]",  # 标题颜色改为青色
         title_align="center",                           # 标题居中
         border_style="cyan",
@@ -222,7 +226,6 @@ def main():
         console.print("[bold red]❌ 路径无效！[/bold red]")
         return
 
-    # 这里修正了 .lower() == "y" 的 bug
     async_mode = console.input(
         "[bold magenta]⚡ 是否启用异步处理[/bold magenta] "
         "[grey70](y/N，默认 N)[/grey70]: "
@@ -264,6 +267,24 @@ def main():
         console.print("[bold red]❌ 未找到视频文件[/bold red]")
         return
 
+    # ================= 新增：检查是否全部已处理 =================
+    all_skipped = all(
+        os.path.splitext(os.path.basename(v))[0] + "_h265.mp4" in existing_outputs
+        for v in videos
+    )
+
+    if all_skipped:
+        console.print(Panel.fit(
+            "🎉 目录中的视频已全部处理完成\n\n"
+            "本次扫描未发现需要压缩的文件",
+            title="状态提示",
+            border_style="green"
+        ))
+        play_notification()
+        console.input("[bold cyan]按回车退出…[/bold cyan]")
+        return
+    # ============================================================
+
     # 初始化进度组件
     progress = Progress(
         TextColumn("{task.description}", justify="left"),
@@ -278,7 +299,6 @@ def main():
         total=len(videos)
     )
 
-    # UI 组合函数
     def make_layout():
         msg_list = "\n".join(recent_logs)
         return Group(
@@ -324,7 +344,6 @@ def main():
         )
         console.print(table)
         
-        # 播放完成提示音
         play_notification()
         console.print("\n[bold green]🔔 全部任务已完成！[/bold green]")
 
