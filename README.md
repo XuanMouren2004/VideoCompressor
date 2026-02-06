@@ -1,5 +1,8 @@
 # 🎬 VideoCompressor - H.265 视频批量压缩工具
 
+<img width="1536" height="1024" alt="VideoCompressor" src="https://github.com/user-attachments/assets/ee8ae979-ff50-49ea-beed-283e0a7fec8d" />
+
+
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)  
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -110,7 +113,7 @@ pip install pyinstaller
 2. 运行打包：
 
 ```bash
-pyinstaller --noconsole --onefile --icon=app.ico main.py
+pyinstaller --noconsole --onefile --icon=app.ico --add-binary "ffmpeg.exe;." --add-binary "ffprobe.exe;." main.py
 ```
 
 参数说明：
