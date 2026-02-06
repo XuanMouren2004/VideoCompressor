@@ -106,7 +106,7 @@ pip install pyinstaller
 2. 运行打包：
 
 ```bash
-pyinstaller --noconsole --onefile --icon=app.ico --add-binary "ffmpeg.exe;." --add-binary "ffprobe.exe;." main.py
+pyinstaller --onefile --icon=app.ico --add-binary "ffmpeg.exe;." --add-binary "ffprobe.exe;." main.py
 ```
 
 参数说明：
